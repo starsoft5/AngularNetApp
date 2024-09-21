@@ -2,13 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 
-/*
-export interface Product {
-    productId: number;
-    productName: string;
-    price: number;
-}
-*/
 
 @Injectable({
   providedIn: 'root'
@@ -33,19 +26,5 @@ export class ProductService {
     const url = `${this.apiUrl}/IsInvoiceNoDuplicate?invoiceNo=${invoiceNo}`;
     return this.http.get<boolean>(url);
   }
-
-
-
-  //isInvoiceNoDuplicate(data: any): Observable<any> {
-  //    return this.http.get(this.restApiIsInvoiceNoDuplicate + data, data);
-  //}
-
-  //isInvoiceNoDuplicate(data: any): Observable<any> {
-  //    return this.http.get(this.restApiIsInvoiceNoDuplicate + data);
-  //}
-
-  //isInvoiceNoDuplicate(invoiceNo: string): Observable<{ exists: boolean }> {
-  //    return this.http.get<{ exists: boolean }>(`${this.restApiIsInvoiceNoDuplicate + invoiceNo}`);
-  //  }
 
 }
