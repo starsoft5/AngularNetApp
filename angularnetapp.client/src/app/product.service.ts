@@ -21,7 +21,6 @@ export class ProductService {
     return this.http.get<any[]>(this.apiUrl);
   }
 
-  // Method to check if invoice number is duplicate
   isInvoiceNoDuplicate(invoiceNo: string): Observable<boolean> {
     const url = `${this.apiUrl}/IsInvoiceNoDuplicate?invoiceNo=${invoiceNo}`;
     return this.http.get<boolean>(url);
