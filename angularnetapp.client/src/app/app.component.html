@@ -1,0 +1,116 @@
+<nav *ngIf="showMainMenu" class="navbar navbar-expand-lg bg-primary">
+  <div class="container-fluid">
+    <label class="navbar-brand" style="color: yellow;">HEAVEN'S PLACE</label>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Existing Menu Items -->
+        <li class="nav-item">
+          <a class="nav-link text-white" routerLink="/invoice">Invoice</a>
+        </li>
+      </ul>
+      <!-- Log Off and Date/Time -->
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <span class="navbar-text" style="color: yellow;">{{ 'Login since: ' + this.currentDateTime }} {{ currentDate }} {{ currentTime }} - {{ this.newItem.email }}</span>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#" (click)="logOff()">Log Off</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<router-outlet></router-outlet>
+
+<div id="loginModal" *ngIf="showModal" class="modal fade show" tabindex="-1" role="dialog" style="display: block;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Log In</h3>
+
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)" class="container mt-4">
+          <!-- Email Field -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input id="email" name="email" [(ngModel)]="newItem.email" formControlName="email" type="email" class="form-control" [ngClass]="{'is-invalid': email?.touched && email?.invalid}">
+            <div *ngIf="loginForm.get('email')?.touched">
+              <div *ngIf="loginForm.get('email')?.hasError('required')">Email is required.</div>
+              <div *ngIf="loginForm.get('email')?.hasError('email')">Invalid email address.</div>
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input id="password" name="password" [(ngModel)]="newItem.password" formControlName="password" type="password" class="form-control" [ngClass]="{'is-invalid': password?.touched && password?.invalid}">
+          </div>
+
+          <!-- Passwod Confirm-->
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Submits</button>
+          <button type="button" class="btn btn-primary" (click)="this.openModalRegister();this.showMainMenu=false;this.statusMessage=''" style="margin-left: 10px;">Register</button>
+        </form>
+      </div>
+      <div style="color: red;font-weight: bolder;margin-left: 26px;">
+        {{ statusMessage }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Register -->
+
+<div id="registerModal" *ngIf="showModalRegister" class="modal fade show" tabindex="-1" role="dialog" style="display: block;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Register</h3>
+
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister($event)" class="container mt-4">
+          <label for="emailRegister" class="form-label">Email:</label>
+          <input id="emailRegister" name="emailRegister" [(ngModel)]="newItemRegister.email" formControlName="emailRegister" type="email" class="form-control" [ngClass]="{'is-invalid': emailRegister?.touched && emailRegister?.invalid}">
+          <div *ngIf="registerForm.get('emailRegister')?.touched">
+            <div *ngIf="registerForm.get('emailRegister')?.hasError('required')">Email is required.</div>
+            <div *ngIf="registerForm.get('emailRegister')?.hasError('email')">Invalid email address.</div>
+          </div>
+
+          <!-- Password Field -->
+          <label for="passwordRegister" class="form-label">Password:</label>
+          <input id="passwordRegister" name="passwordRegister" [(ngModel)]="newItemRegister.password" formControlName="passwordRegister" type="password" class="form-control" [ngClass]="{'is-invalid': passwordRegister?.touched && passwordRegister?.invalid}">
+          <div *ngIf="registerForm.get('passwordRegister')?.touched">
+            <div *ngIf="registerForm.get('passwordRegister')?.hasError('required')">Password is required.</div>
+          </div>
+
+
+          <!-- Password Confirm Field -->
+          <label for="passwordConfirm" class="form-label">Confirm Password:</label>
+          <input id="passwordConfirmRegister" name="passwordConfirmRegister" [(ngModel)]="newItemRegister.passwordConfirm" formControlName="passwordConfirm" type="password" class="form-control" [ngClass]="{'is-invalid': passwordConfirm?.touched && passwordConfirm?.invalid}">
+          <div *ngIf="registerForm.get('passwordConfirm')?.touched">
+            <div *ngIf="registerForm.get('passwordConfirm')?.hasError('required')">Confirm Password is required.</div>
+          </div>
+          <div *ngIf="registerForm.hasError('mismatch') && registerForm.get('passwordConfirm').touched">
+            <small>Passwords do not match.</small>
+          </div>
+
+
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid" style="margin-top: 13px;">Submite</button>
+
+        </form>
+        <button class="btn btn-primary" (click)="this.openModal();this.statusMessage=''" style="margin-left: 100px;margin-top: -68px;margin-top: -64px;">Log In</button>
+      </div>
+      <div style="color: red;font-weight: bolder;margin-left: 26px;">
+        {{ statusMessage }}
+      </div>
+    </div>
+  </div>
+</div>
