@@ -1,13 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
+import Environment from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'https://localhost:7207/product';
-  restApiIsInvoiceNoDuplicate = "https://localhost:7207/product/IsInvoiceNoDuplicate?invoiceNo="
+
+  private baseApiUrl = Environment.baseApi_url;
+
+  private apiUrl = `${this.baseApiUrl}/product`;
 
   constructor(private http: HttpClient) { }
 

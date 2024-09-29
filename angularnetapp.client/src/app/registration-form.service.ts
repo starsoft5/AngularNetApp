@@ -2,13 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { MemberObj } from '../app/models/member';
+import Environment from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegistrationFormService {
 
-  private apiUrl = 'https://localhost:7207/Register';
+  private baseApiUrl = Environment.baseApi_url;
+
+  private apiUrl = `${this.baseApiUrl}/Register`;
 
   constructor(private http: HttpClient) { }
 

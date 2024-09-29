@@ -1,13 +1,17 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
+import Environment from '../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  private apiUrl = 'https://localhost:7207/login';
+  private baseApiUrl = Environment.baseApi_url;
+
+  private apiUrl = `${this.baseApiUrl}/login`;
 
 
   constructor(private http: HttpClient) { }
@@ -18,8 +22,6 @@ export class LoginService {
 
     return this.http.post<number>(this.apiUrl, dataSubmitted, { headers }).pipe(
       map((response: number) => {
-        //console.log("props: " ,Object.keys(response))
-        // Assuming the response contains a number you want to return
         return response === 1 ? 1 : -1; // Adjust this to match the structure of your response
       }),
       catchError(() => {
